@@ -1,0 +1,20 @@
+#pragma once
+
+#include <format>
+
+namespace dawn::core {
+    class Logger {
+    public:
+        Logger() = delete;
+
+        template <typename ...Args>
+        static void Debug(std::format_string<Args...> fmt, Args&&... args) {
+
+#if defined(_DEBUG) || defined(DEBUG)
+            const std::string msg = std::format(fmt, std::forward<Args>(args)...);
+
+            std::cout << "[DEBUG]: " << msg << std::endl;
+#endif
+        }
+    };
+}
